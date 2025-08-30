@@ -34,12 +34,12 @@
             cursor: pointer;
             width: 100%;
         }
+        .result {
+            margin-top: 50px;
+        }
         #result {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #fff;
-            border-radius: 4px;
-            text-align: center;
+            color: #4CAF50;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -64,7 +64,10 @@
             <input type="number" id="num2" step="any" required>
         </div>
         <button onclick="calculate()">Calculate</button>
-        <div id="result"></div>
+        <div class="result">
+            <label for="result">Result:</label>
+            <div id="result">h</div>
+        </div>
     </div>
 
     <script>
@@ -86,7 +89,7 @@
             })
             .then(response => response.text())
             .then(result => {
-                document.getElementById('result').innerHTML = `Result: ${result}`;
+                document.getElementById('result').innerHTML = `${result}`;
             })
             .catch(error => {
                 document.getElementById('result').innerHTML = `Error: ${error.message}`;
