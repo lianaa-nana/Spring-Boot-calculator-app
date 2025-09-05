@@ -34,12 +34,12 @@
             cursor: pointer;
             width: 100%;
         }
-        .result {
-            margin-top: 50px;
-        }
         #result {
-            color: #4CAF50;
-            font-weight: 600;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+            text-align: center;
         }
     </style>
 </head>
@@ -65,8 +65,7 @@
         </div>
         <button onclick="calculate()">Calculate</button>
         <div class="result">
-            <label for="result">Result:</label>
-            <div id="result">h</div>
+            <div id="result"></div>
         </div>
     </div>
 
@@ -89,7 +88,7 @@
             })
             .then(response => response.text())
             .then(result => {
-                document.getElementById('result').innerHTML = `${result}`;
+                document.getElementById('result').innerHTML = `Result: ${result}`;
             })
             .catch(error => {
                 document.getElementById('result').innerHTML = `Error: ${error.message}`;
