@@ -34,8 +34,8 @@ pipeline {
     }
     post {
         always {
-            // Publibat test results
-            publishTestResults testResultsPattern: 'target/surefire-reports/TEST-*.xml'
+            // Publish test results
+            junit 'target/surefire-reports/TEST-*.xml'
             // Publish JaCoCo code coverage report
             publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')], sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
         }
