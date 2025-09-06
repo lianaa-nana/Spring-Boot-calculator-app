@@ -27,8 +27,18 @@ pipeline {
     steps {
         sh '''
             mvn -version
-            mvn clean package
+            mvn clean compile
+            mvn test
+            mvn package -DskipTests
         '''
+    }
+    post {
+        always {
+            // Publish test results
+            publishTestResults testResultsPattern: 'target/surefire-reports/TEST-*.xml'
+            // Publish JaCoCo code coverage report
+            publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')], sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
+        }
     }
 }
 
