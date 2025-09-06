@@ -1,7 +1,7 @@
 package com.example.calculator.model;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 //Changes
 
@@ -14,6 +14,12 @@ public class CalculatorInput {
 
     @NotBlank(message = "Operation cannot be blank")
     private String operation;
+
+    public CalculatorInput(Double num1, Double num2, String operation){
+        this.num1 = num1;
+        this.num2 = num2;
+        this.operation = operation;
+    }
 
     // Getters & Setters
     public Double getNum1() { return num1; }
