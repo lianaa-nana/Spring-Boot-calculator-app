@@ -35,11 +35,15 @@ pipeline {
     }
     post {
         always {
-            bat 'dir target\\surefire-reports'
-            // Publish test results
-            junit 'target/surefire-reports/TEST-*.xml'
-            // Publish JaCoCo code coverage report
-            publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')], sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
+            script {
+                if (fileExists('target/surefire-reports')) {
+                    junit 'target/surefire-reports/*.xml'
+                    publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')],
+                                    sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
+                } else {
+                    echo "No test reports found, skipping JUnit and coverage publishing."
+                }
+            }
         }
     }
 }
