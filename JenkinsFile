@@ -77,14 +77,14 @@ pipeline {
         }
 
         stage('Deploy Container') {
-            environment {
-                DOCKER_IMAGE = "siapasq/spring-boot-calculator:${BUILD_NUMBER}"
-            }
             steps {
                 script {
+                    // Stop any old container (ignore errors if none running)
                     bat 'docker stop spring-boot-calculator || echo "No running container"'
                     bat 'docker rm spring-boot-calculator || echo "No container to remove"'
-                    bat "docker run -d -p 8080:8080 --name spring-boot-calculator ${DOCKER_IMAGE}"
+
+                    // Run new container with the latest image
+                    bat "docker run -d -p 8080:8080 --name spring-boot-calculator siqing/spring-boot-calculator:${BUILD_NUMBER}"
                 }
             }
         }
