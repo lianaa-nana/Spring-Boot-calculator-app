@@ -78,7 +78,7 @@ pipeline {
 
         stage('Deploy Container') {
             environment {
-                DOCKER_IMAGE = "lishan2023/spring-boot-calculator:${BUILD_NUMBER}"
+                DOCKER_IMAGE = "siapasq/spring-boot-calculator:${BUILD_NUMBER}"
             }
             steps {
                 script {
@@ -91,7 +91,7 @@ pipeline {
 
         stage('Trivy Image Scanning') {
             steps {
-                bat "trivy image lishan2023/spring-boot-calculator:${BUILD_NUMBER}"
+                bat "trivy image siapasq/spring-boot-calculator:${BUILD_NUMBER}"
             }
         }
 
