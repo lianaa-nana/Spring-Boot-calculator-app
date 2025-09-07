@@ -1,11 +1,22 @@
 # Use OpenJDK as base image
-FROM openjdk:11-jdk-slim
+FROM openjdk:18-jdk-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy the project files
-COPY . .
+# Copy Maven wrapper & pom.xml first (for caching dependencies)
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+
+# Make Maven wrapper executable (important for Linux base images)
+RUN chmod +x mvnw
+
+# Download dependencies
+RUN ./mvnw dependency:go-offline -B
+
+# Copy the rest of the project
+COPY src ./src
 
 # Build the application
 RUN ./mvnw clean package -DskipTests

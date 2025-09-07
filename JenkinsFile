@@ -102,6 +102,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy Container') {
+            steps {
+                script {
+                    // Stop any old container (ignore errors if none running)
+                    bat 'docker stop spring-boot-calculator || echo "No running container"'
+                    bat 'docker rm spring-boot-calculator || echo "No container to remove"'
+
+                    // Run new container with the latest image
+                    bat "docker run -d -p 8080:8080 --name spring-boot-calculator lishan2023/spring-boot-calculator:${BUILD_NUMBER}"
+                }
+            }
+        }
     }
 
     post {
