@@ -121,7 +121,7 @@ pipeline {
                         git add deployment.yaml
                         git commit -m "Update deployment image to version ${BUILD_NUMBER}" || echo "No changes"
         
-                        git remote set-url origin https://siapaSQ:%GIT_TOKEN%@github.com/lianaa-nana/Spring-Boot-calculator-app.git
+                        git remote set-url origin https://x-access-token:%GIT_TOKEN%@github.com/lianaa-nana/Spring-Boot-calculator-app.git
                         git push origin HEAD:main
                     """
                 }
