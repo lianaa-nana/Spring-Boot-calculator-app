@@ -61,7 +61,7 @@ pipeline {
 
         stage('Build and Push Docker Image') {
             environment {
-                DOCKER_IMAGE = "lishan2023/spring-boot-calculator:${BUILD_NUMBER}"
+                DOCKER_IMAGE = "siapasq/spring-boot-calculator:${BUILD_NUMBER}"
             }
             steps {
                 script {
