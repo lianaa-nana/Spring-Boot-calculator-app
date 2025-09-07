@@ -80,11 +80,19 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 script {
-                    // Stop any old container (ignore errors if none running)
-                    bat 'docker stop spring-boot-calculator || echo "No running container"'
-                    bat 'docker rm spring-boot-calculator || echo "No container to remove"'
+                    // Stop old container if exists
+                    def stopStatus = bat(script: 'docker stop spring-boot-calculator', returnStatus: true)
+                    if (stopStatus != 0) {
+                        echo "No running container to stop"
+                    }
 
-                    // Run new container with the latest image
+                    // Remove old container if exists
+                    def rmStatus = bat(script: 'docker rm spring-boot-calculator', returnStatus: true)
+                    if (rmStatus != 0) {
+                        echo "No container to remove"
+                    }
+
+                    // Run new container
                     bat "docker run -d -p 8080:8080 --name spring-boot-calculator ${DOCKER_IMAGE}"
                 }
             }
