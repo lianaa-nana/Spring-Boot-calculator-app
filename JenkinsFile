@@ -95,8 +95,8 @@ pipeline {
                     // Run new container
                     def runStatus = bat(script: 'netstat -ano | findstr :8080', returnStatus: true)
                     if (runStatus == 0) {
-                        echo "Port 8080 already in use, using 8081 instead"
-                        bat "docker run -d -p 8081:8080 --name spring-boot-calculator ${DOCKER_IMAGE}"
+                        echo "Port 8080 already in use, using 9090 instead"
+                        bat "docker run -d -p 9090:8080 --name spring-boot-calculator ${DOCKER_IMAGE}"
                     } else {
                         bat "docker run -d -p 8080:8080 --name spring-boot-calculator ${DOCKER_IMAGE}"
                     }
