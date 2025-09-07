@@ -42,8 +42,8 @@ pipeline {
                 name: 'JaCoCo Coverage',
                 sourceCodeRetention: 'EVERY_BUILD',
             )
-        }
-    }
+        }
+    }
 }
 
         stage('Static Code Analysis') {
