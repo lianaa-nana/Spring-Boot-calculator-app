@@ -84,14 +84,14 @@ pipeline {
                     bat 'docker rm spring-boot-calculator || echo "No container to remove"'
 
                     // Run new container with the latest image
-                    bat "docker run -d -p 8080:8080 --name spring-boot-calculator siqing/spring-boot-calculator:${BUILD_NUMBER}"
+                    bat "docker run -d -p 8080:8080 --name spring-boot-calculator ${DOCKER_IMAGE}"
                 }
             }
         }
 
         stage('Trivy Image Scanning') {
             steps {
-                bat "trivy image siapasq/spring-boot-calculator:${BUILD_NUMBER}"
+                bat "trivy image ${DOCKER_IMAGE}"
             }
         }
 
