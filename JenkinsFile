@@ -111,19 +111,15 @@ pipeline {
         }
 
         stage('Update Deployment File') {
-            environment {
-                GIT_REPO_NAME = "Spring-Boot-calculator-app"
-                GIT_USER_NAME = "lianaa-nana"
-            }
             steps {
-                withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
                     bat '''
                         git config user.email "princessqing20@gmail.com"
                         git config user.name "Jenkins CI"
                         powershell -Command "(Get-Content deployment.yaml) -replace 'replaceImageTag', '${BUILD_NUMBER}' | Set-Content deployment.yaml"
                         git add deployment.yaml
                         git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
+                        git push https://${GITHUB_TOKEN}@github.com/lianaa-nana/Spring-Boot-calculator-app.git HEAD:main
                     '''
                 }
             }
