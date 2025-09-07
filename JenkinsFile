@@ -121,13 +121,19 @@ pipeline {
                         git add deployment.yaml
                         git commit -m "Update deployment image to version ${BUILD_NUMBER}" || echo "No changes"
         
+                        rem Clear ALL cached creds
+                        git config --system --unset credential.helper || echo "no system helper"
+                        git config --global --unset credential.helper || echo "no global helper"
+                        git config --unset credential.helper || echo "no local helper"
+        
+                        rem Use token format only
                         git remote set-url origin https://x-access-token:%GIT_TOKEN%@github.com/lianaa-nana/Spring-Boot-calculator-app.git
+        
                         git push origin HEAD:main
                     """
                 }
             }
         }
-
     }
 
     post {
