@@ -26,26 +26,24 @@ pipeline {
         PATH = "${JAVA_HOME}/bin:${M2_HOME}/bin:${PATH}"
     }
     steps {
-        bat '''
-            mvn -version
-            mvn clean compile
-            mvn test
-            mvn package -DskipTests
-        '''
+        bat 'mvn -version'
+        bat 'mvn clean compile'
+        bat 'mvn test'
+        bat 'mvn package -DskipTests'
     }
     post {
         always {
-            script {
-                if (fileExists('target/surefire-reports')) {
-                    junit 'target/surefire-reports/*.xml'
-                    publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')],
-                                    sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
-                } else {
-                    echo "No test reports found, skipping JUnit and coverage publishing."
-                }
-            }
-        }
-    }
+            // Publish test results
+            junit 'target/surefire-reports/TEST-*.xml'
+            // Publish JaCoCo HTML code coverage report
+           recordCoverage(
+                tools: [[parser: 'JACOCO', pattern: 'target/site/jacoco/jacoco.xml']],
+                id: 'jacoco',
+                name: 'JaCoCo Coverage',
+                sourceCodeRetention: 'EVERY_BUILD',
+            )
+        }
+    }
 }
 
         stage('Static Code Analysis') {
