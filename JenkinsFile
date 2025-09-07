@@ -114,7 +114,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'github', variable: 'GIT_TOKEN')]) {
                     bat """
-                        git remote set-url origin https://siapaSQ:%GIT_TOKEN%@github.com/lianaa-nana/Spring-Boot-calculator-app.git
+                        git remote set-url origin https://x-access-token:%GIT_TOKEN%@github.com/lianaa-nana/Spring-Boot-calculator-app.git
                         git push origin HEAD:main
                     """
                 }
