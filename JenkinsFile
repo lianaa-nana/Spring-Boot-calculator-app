@@ -4,7 +4,7 @@ pipeline {
     environment {
         JAVA_HOME = 'C:/Program Files/Java/jdk-23'
         PATH = "${JAVA_HOME}/bin:${PATH}"
-        DOCKER_IMAGE = "siapasq/spring-boot-calculator:${BUILD_NUMBER}"
+        DOCKER_IMAGE = "shirley24k/spring-boot-calculator:${BUILD_NUMBER}"
     }
 
     tools {
@@ -62,7 +62,7 @@ pipeline {
 
         stage('Build and Push Docker Image') {
             environment {
-                DOCKER_IMAGE = "siapasq/spring-boot-calculator:${BUILD_NUMBER}"
+                DOCKER_IMAGE = "shirley24k/spring-boot-calculator:${BUILD_NUMBER}"
             }
             steps {
                 script {
@@ -96,9 +96,9 @@ pipeline {
                     def runStatus = bat(script: 'netstat -ano | findstr :8080', returnStatus: true)
                     if (runStatus == 0) {
                         echo "Port 8080 already in use, using 9090 instead"
-                        bat "docker run -d -p 9090:8080 --name spring-boot-calculator ${DOCKER_IMAGE}"
+                        bat "docker run -d -p 9090:8081 --name spring-boot-calculator ${DOCKER_IMAGE}"
                     } else {
-                        bat "docker run -d -p 8080:8080 --name spring-boot-calculator ${DOCKER_IMAGE}"
+                        bat "docker run -d -p 8080:8081 --name spring-boot-calculator ${DOCKER_IMAGE}"
                     }
                 }
             }
